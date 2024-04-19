@@ -4,17 +4,17 @@ from typing import Optional
 from pydantic import BaseModel, Field, conint, Extra
 
 
-MIN_NAME_LENGTH = 1
+MIN_STR_LENGTH = 1
 MAX_NAME_LENGTH = 100
 
 
 class CharityProjectBase(BaseModel):
     name: str = Field(
         ...,
-        min_length=MIN_NAME_LENGTH,
+        min_length=MIN_STR_LENGTH,
         max_length=MAX_NAME_LENGTH
     )
-    description: str = Field(..., min_length=1)
+    description: str = Field(..., min_length=MIN_STR_LENGTH)
     full_amount: conint(gt=0)  # type:ignore
 
     class Config:
@@ -39,8 +39,8 @@ class CharityProjectCreate(CharityProjectBase):
 class CharityProjectUpdate(CharityProjectBase):
     name: Optional[str] = Field(
         None,
-        min_length=MIN_NAME_LENGTH,
+        min_length=MIN_STR_LENGTH,
         max_length=MAX_NAME_LENGTH
     )
-    description: Optional[str] = Field(None, min_length=1)
+    description: Optional[str] = Field(None, min_length=MIN_STR_LENGTH)
     full_amount: Optional[conint(gt=0)]  # type:ignore
